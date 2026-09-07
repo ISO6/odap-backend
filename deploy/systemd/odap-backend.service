@@ -1,0 +1,18 @@
+[Unit]
+Description=ODAP Backend
+After=network.target
+
+[Service]
+User=sysadmin
+WorkingDirectory=/home/sysadmin/winfred/odap-backend
+EnvironmentFile=/home/sysadmin/winfred/odap-backend/.env
+ExecStart=/home/sysadmin/winfred/odap-backend/.venv/bin/gunicorn -k uvicorn.workers.UvicornWorker -w 4 -b 0.0.0.0:8001 app.main:app
+
+Restart=always
+RestartSec=5
+
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
